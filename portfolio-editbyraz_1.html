@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit-By-Raz — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+:root{
+  --noir:#0A0A0A;
+  --fond:#09090F;
+  --fond2:#0E0E18;
+  --card:#121220;
+  --card2:#181828;
+  --bleu:#1A1AE8;
+  --bleu2:#4444FF;
+  --blanc:#F8F8FF;
+  --gris:#A0A0C0;
+  --sub:#505070;
+  --or:#C9A84C;
+  --vert:#2ECC8A;
+  --rouge:#E03030;
+}
+
+body{
+  background:var(--fond);
+  color:var(--gris);
+  font-family:'DM Sans',sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ── GRAIN ── */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.025;
+}
+
+/* ══════════════════════════════════════
+   VUES
+══════════════════════════════════════ */
+.view{display:none}
+.view.active{display:block}
+
+/* ══════════════════════════════════════
+   LOGIN
+══════════════════════════════════════ */
+#view-login{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+.login-box{
+  background:var(--card);
+  border:1px solid rgba(26,26,232,.2);
+  padding:48px 40px;
+  width:100%;max-width:380px;
+  position:relative;overflow:hidden;
+}
+.login-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--bleu),var(--bleu2),var(--bleu));
+}
+.login-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;letter-spacing:4px;
+  color:var(--blanc);margin-bottom:4px;
+}
+.login-sub{font-size:11px;color:var(--sub);letter-spacing:2px;text-transform:uppercase;margin-bottom:36px;}
+.login-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gris);margin-bottom:8px;display:block;}
+.login-input{
+  width:100%;background:var(--fond2);border:1px solid rgba(255,255,255,.08);
+  color:var(--blanc);font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:13px 16px;outline:none;margin-bottom:16px;
+  transition:border-color .2s;
+}
+.login-input:focus{border-color:var(--bleu);}
+.login-btn{
+  width:100%;background:var(--bleu);color:#fff;
+  font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;
+  padding:15px;border:none;cursor:pointer;transition:background .2s;
+}
+.login-btn:hover{background:var(--bleu2);}
+.login-error{font-size:12px;color:var(--rouge);margin-top:10px;display:none;}
+
+/* ══════════════════════════════════════
+   PORTFOLIO PUBLIC
+══════════════════════════════════════ */
+.topbar{height:4px;background:linear-gradient(90deg,var(--bleu),var(--bleu2),var(--bleu));}
+
+header{
+  padding:28px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  background:rgba(9,9,15,.95);
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(20px);
+}
+.h-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:4px;color:var(--blanc);
+}
+.h-brand span{color:var(--bleu);}
+.h-sub{font-size:10px;color:var(--sub);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.h-contact{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--bleu);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:10px 20px;text-decoration:none;transition:background .2s;
+}
+.h-contact:hover{background:var(--bleu2);}
+
+/* HERO */
+.hero{
+  padding:80px 32px 60px;
+  max-width:900px;margin:0 auto;
+  position:relative;
+}
+.hero::before{
+  content:'';position:absolute;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(26,26,232,.08),transparent 70%);
+  top:-100px;right:-100px;pointer-events:none;
+}
+.hero-eyebrow{
+  font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;
+  color:var(--bleu);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--bleu);}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,8vw,80px);
+  line-height:.92;color:var(--blanc);
+  margin-bottom:20px;
+}
+.hero h1 em{color:var(--bleu);font-style:normal;}
+.hero-desc{
+  font-family:'Fraunces',serif;
+  font-style:italic;font-size:18px;
+  color:var(--gris);line-height:1.6;
+  max-width:500px;margin-bottom:40px;
+}
+
+/* STATS ROW */
+.stats{
+  display:flex;gap:40px;flex-wrap:wrap;
+  padding:24px 0;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  margin-bottom:60px;
+}
+.stat-item{}
+.stat-val{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:36px;color:var(--bleu);line-height:1;margin-bottom:3px;
+}
+.stat-lbl{font-size:11px;color:var(--sub);letter-spacing:1px;text-transform:uppercase;}
+
+/* FILTER */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;
+  max-width:900px;margin-left:auto;margin-right:auto;
+  padding:0 32px;
+}
+.filter-btn{
+  font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  padding:8px 16px;border:1px solid rgba(255,255,255,.1);
+  color:var(--sub);background:transparent;cursor:pointer;
+  transition:all .2s;
+}
+.filter-btn.active,.filter-btn:hover{
+  border-color:var(--bleu);color:var(--bleu);background:rgba(26,26,232,.08);
+}
+
+/* GRID */
+.portfolio-wrap{max-width:900px;margin:0 auto;padding:0 32px 80px;}
+.portfolio-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+
+/* CARD */
+.p-card{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.05);
+  overflow:hidden;
+  transition:all .3s;
+  cursor:pointer;
+}
+.p-card:hover{
+  border-color:var(--bleu);
+  transform:translateY(-4px);
+  box-shadow:0 16px 48px rgba(26,26,232,.15);
+}
+
+.p-video{
+  position:relative;
+  width:100%;
+  background:#000;
+  overflow:hidden;
+}
+.p-video.ratio-169{padding-top:56.25%;}
+.p-video.ratio-11{padding-top:100%;}
+.p-video.ratio-916{padding-top:177.78%;}
+
+.p-video iframe{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;border:none;
+}
+
+.p-video img{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;object-fit:cover;
+}
+
+.p-video-placeholder{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--card2);
+  color:var(--sub);font-size:12px;letter-spacing:1px;
+}
+
+.p-info{padding:18px 18px 20px;}
+.p-format{
+  display:inline-block;
+  font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  background:rgba(26,26,232,.15);color:var(--bleu);
+  padding:3px 8px;margin-bottom:10px;
+}
+.p-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:1px;color:var(--blanc);
+  margin-bottom:6px;
+}
+.p-desc{font-size:12px;color:var(--sub);line-height:1.5;margin-bottom:10px;}
+.p-result{
+  font-size:11px;color:var(--vert);
+  display:flex;align-items:center;gap:6px;
+}
+.p-result::before{content:'↑';font-weight:700;}
+.p-card-cta{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:12px;
+  font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  color:var(--bleu);text-decoration:none;
+  padding:6px 0;
+  border-top:1px solid rgba(26,26,232,.12);
+  width:100%;
+  transition:color .2s;
+}
+.p-card-cta:hover{color:var(--bleu2);}
+
+/* EMPTY STATE */
+.empty-state{
+  text-align:center;padding:80px 20px;
+  grid-column:1/-1;
+}
+.empty-state .es-icon{font-size:48px;margin-bottom:16px;opacity:.3;}
+.empty-state p{font-size:14px;color:var(--sub);}
+
+/* ══════════════════════════════════════
+   ADMIN
+══════════════════════════════════════ */
+#view-admin{min-height:100vh;background:var(--fond2);}
+
+.admin-header{
+  background:var(--noir);
+  padding:18px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(26,26,232,.2);
+  position:sticky;top:0;z-index:100;
+}
+.admin-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:3px;color:var(--blanc);
+}
+.admin-brand span{color:var(--bleu);}
+.admin-actions{display:flex;gap:10px;align-items:center;}
+.btn-view-portfolio{
+  font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  padding:8px 16px;border:1px solid rgba(255,255,255,.15);
+  color:var(--gris);background:transparent;cursor:pointer;transition:all .2s;
+  text-decoration:none;display:inline-flex;align-items:center;
+}
+.btn-view-portfolio:hover{border-color:var(--bleu);color:var(--bleu);}
+.btn-logout{
+  font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  padding:8px 16px;background:rgba(224,48,48,.1);border:1px solid rgba(224,48,48,.3);
+  color:var(--rouge);cursor:pointer;transition:all .2s;
+}
+.btn-logout:hover{background:rgba(224,48,48,.2);}
+
+.admin-body{max-width:1000px;margin:0 auto;padding:40px 24px;}
+
+.admin-section{margin-bottom:48px;}
+.admin-section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:2px;color:var(--blanc);
+  margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+/* FORM */
+.admin-form{background:var(--card);padding:28px;margin-bottom:24px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{
+  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gris);
+}
+.form-input,.form-select,.form-textarea{
+  background:var(--fond);border:1px solid rgba(255,255,255,.08);
+  color:var(--blanc);font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:11px 14px;outline:none;transition:border-color .2s;
+  width:100%;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--bleu);}
+.form-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23505070' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.form-textarea{resize:vertical;min-height:80px;}
+.form-hint{font-size:11px;color:var(--sub);margin-top:2px;}
+.form-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.form-toggle input[type=checkbox]{width:16px;height:16px;accent-color:var(--bleu);}
+.form-toggle span{font-size:13px;color:var(--gris);}
+
+.btn-add{
+  background:var(--bleu);color:#fff;
+  font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;
+  padding:13px 28px;border:none;cursor:pointer;
+  transition:background .2s;margin-top:8px;
+}
+.btn-add:hover{background:var(--bleu2);}
+
+/* PREVIEW */
+.form-preview{
+  background:var(--fond);border:1px solid rgba(255,255,255,.06);
+  padding:16px;margin-top:16px;
+}
+.preview-label{font-size:10px;color:var(--sub);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.preview-video{
+  position:relative;background:#000;overflow:hidden;
+  max-width:320px;
+}
+.preview-video.ratio-169{padding-top:56.25%;}
+.preview-video.ratio-11{padding-top:100%;}
+.preview-video.ratio-916{padding-top:56.25%;max-width:180px;}
+.preview-video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+
+/* LIST */
+.admin-list{display:flex;flex-direction:column;gap:8px;}
+.admin-item{
+  background:var(--card);border:1px solid rgba(255,255,255,.05);
+  padding:16px 20px;
+  display:grid;grid-template-columns:60px 1fr auto;
+  gap:16px;align-items:center;
+  transition:border-color .2s;
+}
+.admin-item:hover{border-color:rgba(26,26,232,.3);}
+.ai-thumb{
+  width:60px;aspect-ratio:16/9;background:var(--fond2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;overflow:hidden;position:relative;
+}
+.ai-thumb iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;pointer-events:none;}
+.ai-thumb img{width:100%;height:100%;object-fit:cover;}
+.ai-info{}
+.ai-title{font-size:14px;font-weight:600;color:var(--blanc);margin-bottom:2px;}
+.ai-meta{font-size:11px;color:var(--sub);}
+.ai-actions{display:flex;gap:8px;flex-shrink:0;}
+.btn-edit,.btn-delete,.btn-toggle-vis{
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:7px 12px;border:none;cursor:pointer;transition:all .2s;
+}
+.btn-edit{background:rgba(26,26,232,.15);color:var(--bleu);border:1px solid rgba(26,26,232,.3);}
+.btn-edit:hover{background:rgba(26,26,232,.3);}
+.btn-delete{background:rgba(224,48,48,.1);color:var(--rouge);border:1px solid rgba(224,48,48,.3);}
+.btn-delete:hover{background:rgba(224,48,48,.25);}
+.btn-toggle-vis{background:rgba(255,255,255,.05);color:var(--sub);border:1px solid rgba(255,255,255,.1);}
+.btn-toggle-vis:hover{background:rgba(255,255,255,.1);}
+.btn-toggle-vis.visible{color:var(--vert);border-color:rgba(46,204,138,.3);background:rgba(46,204,138,.08);}
+
+/* DRAG HANDLE */
+.drag-handle{color:var(--sub);cursor:grab;font-size:16px;padding:0 4px;}
+
+/* SETTINGS */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.settings-card{background:var(--card);padding:24px;}
+.settings-card-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--bleu);margin-bottom:16px;}
+.btn-save-settings{
+  background:var(--vert);color:var(--noir);
+  font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;
+  padding:11px 24px;border:none;cursor:pointer;margin-top:12px;
+  transition:opacity .2s;
+}
+.btn-save-settings:hover{opacity:.85;}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:9998;
+  background:var(--card);border:1px solid rgba(46,204,138,.4);
+  padding:14px 20px;font-size:13px;color:var(--vert);
+  transform:translateY(80px);opacity:0;
+  transition:all .3s ease;pointer-events:none;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.error{border-color:rgba(224,48,48,.4);color:var(--rouge);}
+
+/* MODAL EDIT */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.8);
+  z-index:500;display:none;align-items:center;justify-content:center;
+  padding:20px;backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--card);border:1px solid rgba(26,26,232,.2);
+  width:100%;max-width:600px;max-height:90vh;overflow-y:auto;
+  position:relative;
+}
+.modal-header{
+  padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;background:var(--card);z-index:1;
+}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--blanc);}
+.modal-close{background:none;border:none;color:var(--sub);font-size:22px;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--blanc);}
+.modal-body{padding:24px;}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  header{padding:16px 20px;}
+  .hero{padding:50px 20px 40px;}
+  .stats{gap:24px;}
+  .filter-bar,.portfolio-wrap{padding-left:20px;padding-right:20px;}
+  .portfolio-grid{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .settings-grid{grid-template-columns:1fr;}
+  .admin-item{grid-template-columns:1fr auto;}
+  .ai-thumb{display:none;}
+  .admin-body{padding:24px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="view-login" class="view active">
+  <div class="login-box">
+    <div class="login-logo">Edit-By-<span style="color:var(--bleu)">Raz</span></div>
+    <div class="login-sub">Accès Administration</div>
+    <label class="login-label">Mot de passe</label>
+    <input type="password" id="login-pw" class="login-input" placeholder="••••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Accéder →</button>
+    <div class="login-error" id="login-error">Mot de passe incorrect.</div>
+    <div style="margin-top:24px;border-top:1px solid rgba(255,255,255,.06);padding-top:16px;">
+      <a href="#" onclick="showPortfolio()" style="font-size:12px;color:var(--sub);text-decoration:none;">← Voir le portfolio public</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PORTFOLIO PUBLIC ══ -->
+<div id="view-portfolio" class="view">
+  <div class="topbar"></div>
+  <header>
+    <div>
+      <div class="h-brand">Edit-By-<span>Raz</span></div>
+      <div class="h-sub">Créatives Vidéo · Montage Publicitaire</div>
+    </div>
+    <a href="https://wa.me/+213558367332?text=Bonjour%2C%20j'ai%20vu%20votre%20portfolio%20et%20je%20voudrais%20un%20devis." target="_blank" class="h-contact">Devis gratuit →</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Portfolio</div>
+    <h1>Des créatives<br>qui <em>vendent.</em></h1>
+    <p class="hero-desc">Chaque vidéo ici a été construite sur les règles de la vente — accroche, douleur, solution, appel à l'action.</p>
+    <div class="stats" id="portfolio-stats">
+      <div class="stat-item"><div class="stat-val" id="stat-count">0</div><div class="stat-lbl">Créatives réalisées</div></div>
+      <div class="stat-item"><div class="stat-val">FB</div><div class="stat-lbl">Facebook Ads</div></div>
+      <div class="stat-item"><div class="stat-val">100%</div><div class="stat-lbl">Orienté conversion</div></div>
+    </div>
+  </section>
+
+  <div class="filter-bar" id="filter-bar">
+    <button class="filter-btn active" onclick="filterItems('all',this)">Tout voir</button>
+  </div>
+
+  <div class="portfolio-wrap">
+    <div class="portfolio-grid" id="portfolio-grid">
+      <div class="empty-state">
+        <div class="es-icon">🎬</div>
+        <p>Aucune créative pour le moment.<br>Revenez bientôt.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN ══ -->
+<div id="view-admin" class="view">
+  <div class="admin-header">
+    <div class="admin-brand">Edit-By-<span>Raz</span> <span style="font-size:12px;color:var(--sub);letter-spacing:1px;">ADMIN</span></div>
+    <div class="admin-actions">
+      <a href="#" onclick="showPortfolio()" class="btn-view-portfolio">Voir le portfolio</a>
+      <button class="btn-logout" onclick="logout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- LIEN PARTAGEABLE -->
+    <div class="admin-section">
+      <div class="admin-section-title">Lien du portfolio à partager</div>
+      <div class="admin-form" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <input type="text" id="share-link" class="form-input" readonly style="flex:1;min-width:200px;cursor:pointer;" onclick="this.select()">
+        <button class="btn-add" onclick="copyShareLink()" style="margin-top:0;flex-shrink:0;">📋 Copier le lien</button>
+      </div>
+      <div class="form-hint" style="margin-top:8px;padding-left:4px;">C'est ce lien que tu envoies à tes prospects. Ils voient le portfolio, jamais l'admin.</div>
+    </div>
+
+    <!-- AJOUTER UNE CRÉATIVE -->
+    <div class="admin-section">
+      <div class="admin-section-title">Ajouter une créative</div>
+      <div class="admin-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Type de média</label>
+            <select class="form-select" id="f-type" onchange="updateFormType()">
+              <option value="video">Vidéo (Streamable)</option>
+              <option value="image">Image (URL)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Format d'affichage</label>
+            <select class="form-select" id="f-ratio">
+              <option value="ratio-169">16:9 — Paysage</option>
+              <option value="ratio-11">1:1 — Carré</option>
+              <option value="ratio-916">9:16 — Vertical</option>
+            </select>
+          </div>
+          <div class="form-group full" id="f-url-group">
+            <label class="form-label" id="f-url-label">Lien Streamable</label>
+            <input type="text" class="form-input" id="f-url" placeholder="https://streamable.com/ekqux7" oninput="updatePreview()">
+            <div class="form-hint" id="f-url-hint">Colle le lien Streamable de ta vidéo</div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Titre <span style="color:var(--sub)">(optionnel)</span></label>
+            <input type="text" class="form-input" id="f-title" placeholder="Ex: Créative produit digital — Facebook Ads">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Description <span style="color:var(--sub)">(optionnel)</span></label>
+            <textarea class="form-textarea" id="f-desc" placeholder="Contexte, objectif, approche utilisée..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Résultat obtenu <span style="color:var(--sub)">(optionnel)</span></label>
+            <input type="text" class="form-input" id="f-result" placeholder="Ex: 108 ventes · 5€ de budget">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Catégorie</label>
+            <input type="text" class="form-input" id="f-cat" placeholder="Ex: Produit digital, Formation, Guide...">
+          </div>
+          <div class="form-group" style="justify-content:flex-end;">
+            <label class="form-toggle">
+              <input type="checkbox" id="f-visible" checked>
+              <span>Visible sur le portfolio public</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- PREVIEW -->
+        <div class="form-preview" id="form-preview" style="display:none;">
+          <div class="preview-label">Aperçu</div>
+          <div class="preview-video ratio-169" id="preview-container"></div>
+        </div>
+
+        <button class="btn-add" onclick="addItem()">+ Ajouter au portfolio</button>
+      </div>
+    </div>
+
+    <!-- GESTION DES CRÉATIVES -->
+    <div class="admin-section">
+      <div class="admin-section-title">
+        <span>Mes créatives</span>
+        <span style="font-size:13px;color:var(--sub);font-family:'DM Sans',sans-serif;" id="items-count">0 créative(s)</span>
+      </div>
+      <div class="admin-list" id="admin-list">
+        <div style="text-align:center;padding:40px;color:var(--sub);font-size:13px;">Aucune créative ajoutée.</div>
+      </div>
+    </div>
+
+    <!-- PARAMÈTRES -->
+    <div class="admin-section">
+      <div class="admin-section-title">Paramètres du portfolio</div>
+
+      <!-- LIEN PUBLIC -->
+      <div class="settings-card" style="margin-bottom:12px;background:rgba(26,26,232,.08);border:1px solid rgba(26,26,232,.2);">
+        <div class="settings-card-title" style="color:var(--bleu2);">🔗 Lien public à partager</div>
+        <div style="font-size:12px;color:var(--sub);margin-bottom:12px;">Copie ce lien et envoie-le à tes prospects. Ils arriveront directement sur ton portfolio public.</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" class="form-input" id="s-public-link" readonly style="flex:1;color:var(--bleu);cursor:pointer;font-size:12px;" onclick="this.select()">
+          <button class="btn-save-settings" onclick="copyPublicLink()" style="margin-top:0;white-space:nowrap;padding:11px 18px;">Copier</button>
+        </div>
+        <div style="margin-top:12px;">
+          <label class="form-label">Message d'accompagnement personnalisé</label>
+          <textarea class="form-textarea" id="s-link-msg" style="min-height:60px;margin-top:6px;" placeholder="Ex: Voici mon portfolio de créatives vidéo — chaque vidéo est construite pour convertir sur Facebook Ads."></textarea>
+          <div class="form-hint">Ce message sera copié avec le lien quand tu cliques sur "Copier avec message"</div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <button class="btn-save-settings" onclick="copyWithMsg()" style="margin-top:0;background:var(--noir);font-size:13px;padding:9px 16px;">Copier avec message</button>
+            <button class="btn-save-settings" onclick="saveLinkMsg()" style="margin-top:0;font-size:13px;padding:9px 16px;">Enregistrer le message</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+        <div class="settings-card">
+          <div class="settings-card-title">Infos publiques</div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label class="form-label">Tagline</label>
+            <input type="text" class="form-input" id="s-tagline" placeholder="Des créatives qui vendent.">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description hero</label>
+            <textarea class="form-textarea" id="s-desc" style="min-height:60px;"></textarea>
+          </div>
+          <button class="btn-save-settings" onclick="saveSettings()">Enregistrer</button>
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-title">Changer le mot de passe</div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label class="form-label">Mot de passe actuel</label>
+            <input type="password" class="form-input" id="s-pw-old" placeholder="••••••••">
+          </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label class="form-label">Nouveau mot de passe</label>
+            <input type="password" class="form-input" id="s-pw-new" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmer</label>
+            <input type="password" class="form-input" id="s-pw-confirm" placeholder="••••••••">
+          </div>
+          <button class="btn-save-settings" onclick="changePw()">Changer</button>
+        </div>
+      </div>
+    </div>
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Modifier la créative</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-select" id="edit-type">
+            <option value="video">Vidéo</option>
+            <option value="image">Image</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Format</label>
+          <select class="form-select" id="edit-ratio">
+            <option value="ratio-169">16:9</option>
+            <option value="ratio-11">1:1</option>
+            <option value="ratio-916">9:16</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">URL</label>
+          <input type="text" class="form-input" id="edit-url">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Titre</label>
+          <input type="text" class="form-input" id="edit-title">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="edit-desc"></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Résultat</label>
+          <input type="text" class="form-input" id="edit-result">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Catégorie</label>
+          <input type="text" class="form-input" id="edit-cat">
+        </div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <label class="form-toggle">
+            <input type="checkbox" id="edit-visible">
+            <span>Visible publiquement</span>
+          </label>
+        </div>
+      </div>
+      <button class="btn-add" onclick="saveEdit()" style="margin-top:16px;">Enregistrer les modifications</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- WHATSAPP FLOTTANT -->
+<a href="https://wa.me/+213558367332?text=Bonjour%2C%20j%27ai%20vu%20votre%20portfolio%20et%20j%27ai%20une%20question." 
+   target="_blank" 
+   id="wa-float"
+   style="
+     position:fixed;bottom:24px;right:24px;z-index:200;
+     width:48px;height:48px;
+     background:#25D366;border-radius:50%;
+     display:flex;align-items:center;justify-content:center;
+     text-decoration:none;
+     box-shadow:0 4px 20px rgba(37,211,102,.4);
+     animation:wa-pulse 2.5s ease-in-out infinite;
+   ">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<style>
+@keyframes wa-pulse {
+  0%,100%{ box-shadow:0 4px 20px rgba(37,211,102,.4),0 0 0 0 rgba(37,211,102,.3); }
+  50%{ box-shadow:0 4px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.0); }
+}
+#wa-float{ display:none; }
+</style>
+
+<script>
+// ══════════════════════════════════════
+// CONFIG & STORAGE
+// ══════════════════════════════════════
+var DEFAULT_PW_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // "password"
+var SALT = 'editbyraz_2026';
+
+function hashPw(pw) {
+  // Simple hash using subtle crypto not available sync — use stored hash comparison
+  return pw; // We'll use btoa for simplicity
+}
+
+function getStoredPw() {
+  try { return localStorage.getItem('ebr_pw') || 'editbyraz2026'; } catch(e){ return 'editbyraz2026'; }
+}
+
+function getData() {
+  try {
+    var d = localStorage.getItem('ebr_data');
+    return d ? JSON.parse(d) : { items: [], settings: { tagline: "Des créatives qui vendent.", desc: "Chaque vidéo ici a été construite sur les règles de la vente — accroche, douleur, solution, appel à l'action." } };
+  } catch(e) { return { items: [], settings: {} }; }
+}
+
+function saveData(d) {
+  try { localStorage.setItem('ebr_data', JSON.stringify(d)); } catch(e){}
+}
+
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+function showView(id) {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function showPortfolio() {
+  showView('view-portfolio');
+  renderPortfolio();
+  var wa = document.getElementById('wa-float');
+  if (wa) wa.style.display = 'flex';
+}
+
+function showAdmin() {
+  showView('view-admin');
+  renderAdmin();
+  loadSettings();
+  setShareLink();
+  var wa = document.getElementById('wa-float');
+  if (wa) wa.style.display = 'none';
+}
+
+function setShareLink() {
+  var base = window.location.href.split('#')[0];
+  document.getElementById('share-link').value = base + '#portfolio';
+}
+
+function copyShareLink() {
+  var input = document.getElementById('share-link');
+  input.select();
+  try {
+    navigator.clipboard.writeText(input.value).then(function(){
+      showToast('Lien copié dans le presse-papier !');
+    }).catch(function(){
+      document.execCommand('copy');
+      showToast('Lien copié dans le presse-papier !');
+    });
+  } catch(e) {
+    document.execCommand('copy');
+    showToast('Lien copié dans le presse-papier !');
+  }
+}
+
+// ══════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════
+function doLogin() {
+  var pw = document.getElementById('login-pw').value;
+  var stored = getStoredPw();
+  if (pw === stored) {
+    document.getElementById('login-error').style.display = 'none';
+    try { sessionStorage.setItem('ebr_auth', '1'); } catch(e){}
+    showAdmin();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-pw').value = '';
+  }
+}
+
+function logout() {
+  try { sessionStorage.removeItem('ebr_auth'); } catch(e){}
+  showView('view-login');
+}
+
+function checkAuth() {
+  try { return sessionStorage.getItem('ebr_auth') === '1'; } catch(e){ return false; }
+}
+
+// ══════════════════════════════════════
+// URL PARSER
+// ══════════════════════════════════════
+function parseUrl(url, type) {
+  if (type === 'image') return { kind: 'image', src: url };
+  // Streamable
+  var sm = url.match(/streamable\.com\/(?:e\/)?([a-zA-Z0-9]+)/);
+  if (sm) return { kind: 'iframe', src: 'https://streamable.com/e/' + sm[1] + '?loop=0' };
+  // YouTube
+  var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  if (yt) return { kind: 'iframe', src: 'https://www.youtube.com/embed/' + yt[1] };
+  // Google Drive
+  var gd = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (gd) return { kind: 'iframe', src: 'https://drive.google.com/file/d/' + gd[1] + '/preview' };
+  // Direct iframe if it's an embed URL
+  if (url.includes('streamable.com/e/') || url.includes('youtube.com/embed') || url.includes('drive.google.com')) {
+    return { kind: 'iframe', src: url };
+  }
+  return { kind: 'iframe', src: url };
+}
+
+function buildMedia(parsed, ratioClass) {
+  if (parsed.kind === 'image') {
+    return '<div class="p-video ' + ratioClass + '"><img src="' + parsed.src + '" alt="Créative"></div>';
+  }
+  return '<div class="p-video ' + ratioClass + '"><iframe src="' + parsed.src + '" allow="autoplay;fullscreen" allowfullscreen></iframe></div>';
+}
+
+// ══════════════════════════════════════
+// PORTFOLIO PUBLIC
+// ══════════════════════════════════════
+var currentFilter = 'all';
+
+function renderPortfolio() {
+  var d = getData();
+  var items = d.items.filter(function(i){ return i.visible !== false; });
+
+  // Stats
+  document.getElementById('stat-count').textContent = items.length;
+
+  // Settings
+  if (d.settings && d.settings.tagline) {
+    document.querySelector('.hero h1 em').textContent = d.settings.tagline.split('.')[0] || 'vendent.';
+  }
+
+  // Filters
+  var cats = ['all'];
+  items.forEach(function(i){ if(i.cat && cats.indexOf(i.cat) === -1) cats.push(i.cat); });
+  var fb = document.getElementById('filter-bar');
+  fb.innerHTML = '';
+  cats.forEach(function(c){
+    var b = document.createElement('button');
+    b.className = 'filter-btn' + (c === currentFilter ? ' active' : '');
+    b.textContent = c === 'all' ? 'Tout voir' : c;
+    b.onclick = function(){ filterItems(c, b); };
+    fb.appendChild(b);
+  });
+
+  renderGrid(items);
+}
+
+function filterItems(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var d = getData();
+  var items = d.items.filter(function(i){
+    if (i.visible === false) return false;
+    if (cat === 'all') return true;
+    return i.cat === cat;
+  });
+  renderGrid(items);
+}
+
+function renderGrid(items) {
+  var grid = document.getElementById('portfolio-grid');
+  if (!items.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="es-icon">🎬</div><p>Aucune créative pour le moment.<br>Revenez bientôt.</p></div>';
+    return;
+  }
+  grid.innerHTML = items.map(function(item){
+    var parsed = parseUrl(item.url, item.type);
+    var media = buildMedia(parsed, item.ratio || 'ratio-169');
+    return '<div class="p-card">' +
+      media +
+      '<div class="p-info">' +
+        (item.ratio ? '<span class="p-format">' + item.ratio.replace('ratio-','').replace('169','16:9').replace('11','1:1').replace('916','9:16') + '</span>' : '') +
+        (item.title ? '<div class="p-title">' + item.title + '</div>' : '') +
+        (item.desc ? '<div class="p-desc">' + item.desc + '</div>' : '') +
+        (item.result ? '<div class="p-result">' + item.result + '</div>' : '') +
+        '<a href="https://wa.me/+213558367332?text=Bonjour%2C%20j%27ai%20vu%20cette%20cr%C3%A9ative%20sur%20votre%20portfolio%20et%20je%20voudrais%20un%20devis.%20Ma%20cible%20%3A" target="_blank" class="p-card-cta">Demander un devis →</a>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ══════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════
+function renderAdmin() {
+  var d = getData();
+  var list = document.getElementById('admin-list');
+  document.getElementById('items-count').textContent = d.items.length + ' créative(s)';
+
+  if (!d.items.length) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--sub);font-size:13px;">Aucune créative ajoutée.</div>';
+    return;
+  }
+
+  list.innerHTML = d.items.map(function(item, idx){
+    var parsed = parseUrl(item.url, item.type);
+    var thumbContent = parsed.kind === 'image'
+      ? '<img src="' + parsed.src + '" alt="">'
+      : '<iframe src="' + parsed.src + '" allow="autoplay" style="pointer-events:none;"></iframe>';
+
+    return '<div class="admin-item" data-id="' + item.id + '">' +
+      '<div class="ai-thumb">' + thumbContent + '</div>' +
+      '<div class="ai-info">' +
+        '<div class="ai-title">' + (item.title || 'Sans titre') + '</div>' +
+        '<div class="ai-meta">' + (item.type === 'video' ? 'Vidéo' : 'Image') + ' · ' + (item.ratio || 'ratio-169').replace('ratio-','').replace('169','16:9').replace('11','1:1').replace('916','9:16') + (item.cat ? ' · ' + item.cat : '') + '</div>' +
+      '</div>' +
+      '<div class="ai-actions">' +
+        '<button class="btn-toggle-vis ' + (item.visible !== false ? 'visible' : '') + '" onclick="toggleVis(' + idx + ')">' + (item.visible !== false ? '👁 Visible' : '🙈 Caché') + '</button>' +
+        '<button class="btn-edit" onclick="openEdit(' + idx + ')">Modifier</button>' +
+        '<button class="btn-delete" onclick="deleteItem(' + idx + ')">Supprimer</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function updateFormType() {
+  var type = document.getElementById('f-type').value;
+  var hint = document.getElementById('f-url-hint');
+  var label = document.getElementById('f-url-label');
+  var input = document.getElementById('f-url');
+  if (type === 'video') {
+    label.textContent = 'Lien Streamable / YouTube / Drive';
+    hint.textContent = 'Streamable, YouTube, ou Google Drive';
+    input.placeholder = 'https://streamable.com/ekqux7';
+  } else {
+    label.textContent = "URL de l'image";
+    hint.textContent = 'Lien direct vers ton image (PNG, JPG, WebP)';
+    input.placeholder = 'https://exemple.com/image.jpg';
+  }
+  updatePreview();
+}
+
+function updatePreview() {
+  var url = document.getElementById('f-url').value.trim();
+  var type = document.getElementById('f-type').value;
+  var ratio = document.getElementById('f-ratio').value;
+  var preview = document.getElementById('form-preview');
+  var container = document.getElementById('preview-container');
+
+  if (!url) { preview.style.display = 'none'; return; }
+
+  var parsed = parseUrl(url, type);
+  container.className = 'preview-video ' + ratio;
+
+  if (parsed.kind === 'image') {
+    container.innerHTML = '<img src="' + parsed.src + '" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">';
+  } else {
+    container.innerHTML = '<iframe src="' + parsed.src + '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allow="autoplay;fullscreen" allowfullscreen></iframe>';
+  }
+  preview.style.display = 'block';
+}
+
+function addItem() {
+  var url = document.getElementById('f-url').value.trim();
+  if (!url) { showToast('Colle un lien vidéo ou image.', true); return; }
+
+  var d = getData();
+  var item = {
+    id: Date.now(),
+    type: document.getElementById('f-type').value,
+    url: url,
+    ratio: document.getElementById('f-ratio').value,
+    title: document.getElementById('f-title').value.trim(),
+    desc: document.getElementById('f-desc').value.trim(),
+    result: document.getElementById('f-result').value.trim(),
+    cat: document.getElementById('f-cat').value.trim(),
+    visible: document.getElementById('f-visible').checked,
+    createdAt: new Date().toISOString()
+  };
+
+  d.items.unshift(item);
+  saveData(d);
+
+  // Reset form
+  ['f-url','f-title','f-desc','f-result','f-cat'].forEach(function(id){
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-visible').checked = true;
+  document.getElementById('form-preview').style.display = 'none';
+
+  renderAdmin();
+  showToast('Créative ajoutée avec succès !');
+}
+
+function deleteItem(idx) {
+  if (!confirm('Supprimer cette créative ?')) return;
+  var d = getData();
+  d.items.splice(idx, 1);
+  saveData(d);
+  renderAdmin();
+  showToast('Créative supprimée.');
+}
+
+function toggleVis(idx) {
+  var d = getData();
+  d.items[idx].visible = !d.items[idx].visible;
+  saveData(d);
+  renderAdmin();
+  showToast(d.items[idx].visible ? 'Créative visible.' : 'Créative masquée.');
+}
+
+var editingIdx = -1;
+
+function openEdit(idx) {
+  var d = getData();
+  var item = d.items[idx];
+  editingIdx = idx;
+
+  document.getElementById('edit-id').value = idx;
+  document.getElementById('edit-type').value = item.type || 'video';
+  document.getElementById('edit-ratio').value = item.ratio || 'ratio-169';
+  document.getElementById('edit-url').value = item.url || '';
+  document.getElementById('edit-title').value = item.title || '';
+  document.getElementById('edit-desc').value = item.desc || '';
+  document.getElementById('edit-result').value = item.result || '';
+  document.getElementById('edit-cat').value = item.cat || '';
+  document.getElementById('edit-visible').checked = item.visible !== false;
+
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+  editingIdx = -1;
+}
+
+function saveEdit() {
+  if (editingIdx < 0) return;
+  var d = getData();
+  var item = d.items[editingIdx];
+
+  item.type = document.getElementById('edit-type').value;
+  item.ratio = document.getElementById('edit-ratio').value;
+  item.url = document.getElementById('edit-url').value.trim();
+  item.title = document.getElementById('edit-title').value.trim();
+  item.desc = document.getElementById('edit-desc').value.trim();
+  item.result = document.getElementById('edit-result').value.trim();
+  item.cat = document.getElementById('edit-cat').value.trim();
+  item.visible = document.getElementById('edit-visible').checked;
+
+  saveData(d);
+  closeModal();
+  renderAdmin();
+  showToast('Modifications enregistrées.');
+}
+
+function loadSettings() {
+  var d = getData();
+  if (d.settings) {
+    document.getElementById('s-tagline').value = d.settings.tagline || '';
+    document.getElementById('s-desc').value = d.settings.desc || '';
+    document.getElementById('s-link-msg').value = d.settings.linkMsg || '';
+  }
+  // Set public link
+  var publicUrl = window.location.href.split('#')[0] + '#portfolio';
+  document.getElementById('s-public-link').value = publicUrl;
+}
+
+function copyPublicLink() {
+  var link = document.getElementById('s-public-link').value;
+  navigator.clipboard ? navigator.clipboard.writeText(link) : fallbackCopy(link);
+  showToast('Lien copié !');
+}
+
+function copyWithMsg() {
+  var link = document.getElementById('s-public-link').value;
+  var msg = document.getElementById('s-link-msg').value.trim();
+  var full = msg ? msg + '\n\n' + link : link;
+  navigator.clipboard ? navigator.clipboard.writeText(full) : fallbackCopy(full);
+  showToast('Message + lien copiés !');
+}
+
+function saveLinkMsg() {
+  var d = getData();
+  d.settings = d.settings || {};
+  d.settings.linkMsg = document.getElementById('s-link-msg').value.trim();
+  saveData(d);
+  showToast('Message enregistré.');
+}
+
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+}
+
+function saveSettings() {
+  var d = getData();
+  d.settings = d.settings || {};
+  d.settings.tagline = document.getElementById('s-tagline').value.trim();
+  d.settings.desc = document.getElementById('s-desc').value.trim();
+  saveData(d);
+  showToast('Paramètres enregistrés.');
+}
+
+function changePw() {
+  var old = document.getElementById('s-pw-old').value;
+  var nw = document.getElementById('s-pw-new').value;
+  var confirm = document.getElementById('s-pw-confirm').value;
+
+  if (old !== getStoredPw()) { showToast('Mot de passe actuel incorrect.', true); return; }
+  if (!nw || nw.length < 6) { showToast('Le nouveau mot de passe doit faire au moins 6 caractères.', true); return; }
+  if (nw !== confirm) { showToast('Les mots de passe ne correspondent pas.', true); return; }
+
+  try { localStorage.setItem('ebr_pw', nw); } catch(e){}
+  document.getElementById('s-pw-old').value = '';
+  document.getElementById('s-pw-new').value = '';
+  document.getElementById('s-pw-confirm').value = '';
+  showToast('Mot de passe modifié avec succès.');
+}
+
+// ══════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════
+function showToast(msg, isError) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+(function(){
+  // Close modal on overlay click
+  document.getElementById('edit-modal').addEventListener('click', function(e){
+    if (e.target === this) closeModal();
+  });
+
+  // Check if already logged in
+  if (checkAuth()) {
+    showAdmin();
+  } else {
+    // Always show portfolio by default
+    showPortfolio();
+  }
+})();
+</script>
+</body>
+</html>
